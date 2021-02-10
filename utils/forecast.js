@@ -8,15 +8,15 @@ const forecast = (latitude, longitude, callback) => {
     longitude +
     "&unit=f"; //changed unit to fahrenheit
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("Unable to connect to the server!", undefined);
       // console.log("Unable to connect to the server!");
-    } else if (response.body.error) {
+    } else if (body.error) {
       callback("Invalid location!", undefined);
       // console.log("Invalid location!");
     } else {
-      const weatherData = response.body.current;
+      const weatherData = body.current;
       callback(
         undefined,
         `${weatherData.weather_descriptions[0]}. It is currently ${weatherData.temperature} fahrenheit out. It feels like ${weatherData.feelslike} fahrenheit out.`
